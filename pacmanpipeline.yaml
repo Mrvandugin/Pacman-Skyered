@@ -17,6 +17,14 @@ stages:
         steps:
           # Checkout-Code-Schritt
           - checkout: self
+          # Docker-Anmelde-Schritt
+          - task: Docker@2
+            displayName: Login to Docker registry
+            inputs:
+              command: login
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              username: $(DOCKER_USERNAME)
+              password: $(DOCKER_PASSWORD)
           # Docker-Build-Schritt
           - task: Docker@2
             displayName: Build Dockerfile
@@ -38,6 +46,14 @@ stages:
         steps:
           # Checkout-Code-Schritt
           - checkout: self
+          # Docker-Anmelde-Schritt
+          - task: Docker@2
+            displayName: Login to Docker registry
+            inputs:
+              command: login
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              username: $(DOCKER_USERNAME)
+              password: $(DOCKER_PASSWORD)
           # Docker-Run-Schritt
           - task: Docker@2
             displayName: Run Docker Container
@@ -64,6 +80,14 @@ stages:
       - job: TagImage
         # Schritte im Tag-Job
         steps:
+          # Docker-Anmelde-Schritt
+          - task: Docker@2
+            displayName: Login to Docker registry
+            inputs:
+              command: login
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              username: $(DOCKER_USERNAME)
+              password: $(DOCKER_PASSWORD)
           # Docker-Tag-Schritt
           - task: Docker@2
             displayName: Tag Docker Image
