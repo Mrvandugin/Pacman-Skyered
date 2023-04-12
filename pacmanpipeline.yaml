@@ -1,0 +1,76 @@
+# Name der Pipeline
+name: pacman-app-pipeline
+
+# Definition der Trigger
+trigger:
+  - main
+
+# Definition der Stages
+stages:
+  # Build-Stage
+  - stage: Build
+    # Jobs in der Build-Stage
+    jobs:
+      # Build-Job
+      - job: BuildDockerfile
+        # Schritte im Build-Job
+        steps:
+          # Checkout-Code-Schritt
+          - checkout: self
+          # Docker-Build-Schritt
+          - task: Docker@2
+            displayName: Build Dockerfile
+            inputs:
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              repository: 'pacmanrepo'
+              command: build
+              Dockerfile: $(dockerfilePath)
+              tags: |
+                'tomvdpacman.azurecr.io/pacmanrepo:$(Build.BuildId)'
+
+  # Test-Stage
+  - stage: Test
+    # Jobs in der Test-Stage
+    jobs:
+      # Test-Job
+      - job: TestApplication
+        # Schritte im Test-Job
+        steps:
+          # Checkout-Code-Schritt
+          - checkout: self
+          # Docker-Run-Schritt
+          - task: Docker@2
+            displayName: Run Docker Container
+            inputs:
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              repository: 'pacmanrepo'
+              command: run
+              arguments: |
+                -d
+                --name pacman-app
+                'tomvdpacman.azurecr.io/pacmanrepo:$(Build.BuildId)'
+              ports: |
+                80:80
+              envVars: |
+                ENVIRONMENT=staging
+          # Test-Schritt
+          - script: npm run test
+
+  # Tag-Stage
+  - stage: Tag
+    # Jobs in der Tag-Stage
+    jobs:
+      # Tag-Job
+      - job: TagImage
+        # Schritte im Tag-Job
+        steps:
+          # Docker-Tag-Schritt
+          - task: Docker@2
+            displayName: Tag Docker Image
+            inputs:
+              containerRegistry: 'tomvdpacman.azurecr.io'
+              repository: 'pacmanrepo'
+              command: tag
+              arguments: |
+                'tomvdpacman.azurecr.io/pacmanrepo:$(Build.BuildId)'
+                'tomvdpacman.azurecr.io/pacmanrepo:latest'
