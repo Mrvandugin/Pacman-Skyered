@@ -23,8 +23,8 @@ stages:
             inputs:
               command: login
               containerRegistry: 'tomvdpacman.azurecr.io'
-              username: $(DOCKER_USERNAME)
-              password: $(DOCKER_PASSWORD)
+              username: $(ACR_USERNAME)
+              password: $(ARC_PASSWORD)
           # Docker-Build-Schritt
           - task: Docker@2
             displayName: Build Dockerfile
@@ -52,8 +52,8 @@ stages:
             inputs:
               command: login
               containerRegistry: 'tomvdpacman.azurecr.io'
-              username: $(DOCKER_USERNAME)
-              password: $(DOCKER_PASSWORD)
+              username: $(ACR_USERNAME)
+              password: $(ACR_PASSWORD)
           # Docker-Run-Schritt
           - task: Docker@2
             displayName: Run Docker Container
@@ -86,8 +86,8 @@ stages:
             inputs:
               command: login
               containerRegistry: 'tomvdpacman.azurecr.io'
-              username: $(DOCKER_USERNAME)
-              password: $(DOCKER_PASSWORD)
+              username: $(ACR_USERNAME)
+              password: $(ACR_PASSWORD)
           # Docker-Tag-Schritt
           - task: Docker@2
             displayName: Tag Docker Image
