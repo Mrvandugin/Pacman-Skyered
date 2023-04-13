@@ -9,6 +9,7 @@ variables:
   imageName: 'pacman/pacman-app'
   registry: 'harbor'
   dockerfilePath: './Dockerfile'
+  tag: 0.2 
 
 steps:
 - task: Docker@2
@@ -19,4 +20,4 @@ steps:
     dockerfile: $(dockerfilePath)
     containerRegistry: $(registry)
     tags: |
-      $(tag)
+     $(tag)
