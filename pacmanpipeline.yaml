@@ -10,12 +10,13 @@ variables:
   registry: 'harbor'
   dockerfilePath: './Dockerfile'
 
-task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageName)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(registry)
-        tags: |
-          $(tag)
+steps:
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs:
+    command: buildAndPush
+    repository: $(imageName)
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(registry)
+    tags: |
+      $(tag)
