@@ -7,74 +7,15 @@ trigger:
 
 variables:
   imageName: 'pacman/pacman-app'
-  registry: 'harbor.skyered-devops.de'
+  registry: 'harbor'
   dockerfilePath: './Dockerfile'
 
-# Definition der Stages
-stages:
-  # Build-Stage
-  - stage: Build
-    # Jobs in der Build-Stage
-    jobs:
-      # Build-Job
-      - job: BuildDockerfile
-        # Schritte im Build-Job
-        steps:
-          # Checkout-Code-Schritt
-          - checkout: self
-          # Docker-Build-Schritt
-          - task: Docker@2
-            displayName: Build Dockerfile
-            inputs:
-              containerRegistry: $(registry)
-              repository: $(imageName)
-              command: build
-              Dockerfile: $(dockerfilePath)
-
-
-  # Test-Stage
-  - stage: Test
-    # Jobs in der Test-Stage
-    jobs:
-      # Test-Job
-      - job: TestApplication
-        # Schritte im Test-Job
-        steps:
-          # Checkout-Code-Schritt
-          - checkout: self
-          # Docker-Run-Schritt
-          - task: Docker@2
-            displayName: Run Docker Container
-            inputs:
-              containerRegistry: $(registry)
-              repository: $(imageName)
-              command: run
-              arguments: |
-                -d
-                --name $(imageName)
-                '$(registry):$(Build.BuildId)'
-              ports: |
-                80:80
-              envVars: |
-                ENVIRONMENT=staging
-          # Test-Schritt
-          - script: npm run test
-
-  # Tag-Stage
-  - stage: Tag
-    # Jobs in der Tag-Stage
-    jobs:
-      # Tag-Job
-      - job: TagImage
-        # Schritte im Tag-Job
-        steps:
-          # Docker-Tag-Schritt
-          - task: Docker@2
-            displayName: Tag Docker Image
-            inputs:
-              containerRegistry: $(registry)
-              repository: $(imageName)
-              command: tag
-              arguments: |
-                '$(registry):$(Build.BuildId)'
-                '$(registry):latest'
+task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageName)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(registry)
+        tags: |
+          $(tag)
