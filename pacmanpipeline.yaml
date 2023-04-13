@@ -6,8 +6,8 @@ trigger:
   - main
 
 variables:
-  imageName: 'pacman-app'
-  registry: 'pacmanrepo'
+  imageName: 'pacman/pacman-app'
+  registry: 'harbor.skyered-devops.de'
   dockerfilePath: './Dockerfile'
 
 # Definition der Stages
@@ -30,8 +30,7 @@ stages:
               repository: $(imageName)
               command: build
               Dockerfile: $(dockerfilePath)
-              tags: |
-                'tomvd123/pacmanrepo:$(Build.BuildId)'
+
 
   # Test-Stage
   - stage: Test
@@ -52,8 +51,8 @@ stages:
               command: run
               arguments: |
                 -d
-                --name pacman-app
-                'tomvd123/pacmanrepo:$(Build.BuildId)'
+                --name $(imageName)
+                '$(registry):$(Build.BuildId)'
               ports: |
                 80:80
               envVars: |
@@ -77,5 +76,5 @@ stages:
               repository: $(imageName)
               command: tag
               arguments: |
-                'tomvd123/pacmanrepo:$(Build.BuildId)'
-                'tomvd123/pacmanrepo:latest'
+                '$(registry):$(Build.BuildId)'
+                '$(registry):latest'
