@@ -11,6 +11,7 @@ variables:
   dockerfilePath: './Dockerfile'
   tag: 0.2 
 
+# Build, push and Tag
 steps:
 - task: Docker@2
   displayName: Build and push an image to container registry

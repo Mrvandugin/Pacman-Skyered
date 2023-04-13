@@ -6,7 +6,7 @@ pool:
 
 variables:
   imageName: 'pacman-app'
-  registry: 'pacmanrepo'
+  registry: 'https://hub.docker.com/repository/docker/tomvd123/pacmanrepo'
   dockerfilePath: './Dockerfile'
 
 steps:
