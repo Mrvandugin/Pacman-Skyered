@@ -11,9 +11,19 @@ pipeline {
     registry = 'harbor.skyered-devops.de'
     dockerfilePath = './Dockerfile'
     tag = '0.4'
+    dockerUser = credentials('docker-registry-user')
+    dockerPassword = credentials('docker-registry-password')
   }
   
   stages {
+    stage('Docker login') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-registry-login', passwordVariable: 'HARBOR_PASSWORD', usernameVariable: 'HARBOR_USERNAME')]) {
+          sh "docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${registry}"
+        }
+      }
+    }
+    
     stage('Build') {
       steps {
         sh "docker build -t ${imageName}:${tag} -f ${dockerfilePath} ."
