@@ -24,7 +24,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'harbor-registry-credentials', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD')]) {
           sh 'echo ${HARBOR_PASSWORD} | docker login -u ${HARBOR_USERNAME} ${registry} --password-stdin'
-          sh 'docker tag ${imageName}:${tag} ${imageName}:${tag}''
+          sh 'docker tag ${imageName}:${tag} ${imageName}:${tag}'
           sh 'docker push ${imageName}:${tag}'
         }
       }
