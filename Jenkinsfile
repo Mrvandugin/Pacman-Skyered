@@ -32,7 +32,7 @@ pipeline {
     
     stage('Tag') {
       steps {
-        sh "docker tag ${imageName}:${tag} ${registry}/${imageName}:${tag}"
+        sh "docker tag ${imageName}:${tag} ${imageName}:${tag}"
       }
     }
     
