@@ -6,6 +6,8 @@ pipeline {
         dockerfilePath = './Dockerfile'
         tag = '0.4'
     }
+
+    
     stages {
         stage('Build Docker Image') {
             steps {
