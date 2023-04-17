@@ -38,7 +38,7 @@ pipeline {
     
     stage('Push') {
       steps {
-        sh "docker push ${registry}/${imageName}:${tag}"
+        sh "docker push ${imageName}:${tag}"
       }
     }
   }
