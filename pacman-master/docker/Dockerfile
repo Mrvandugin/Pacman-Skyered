@@ -13,7 +13,7 @@ RUN git clone https://github.com/font/pacman.git .
 RUN npm install
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 27017
 
 # Run container
 CMD ["npm", "start"]
