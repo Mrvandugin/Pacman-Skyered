@@ -12,7 +12,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_ROOT_DB=pacman
+      - MONGO_INITDB_ROOT_DATABASE=pacman
   mongo-express:
     image: mongo-express
     ports:
