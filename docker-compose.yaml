@@ -1,8 +1,10 @@
 version: '3'
 services:
-  login:
+  pacman-app:
     image: pacman-app
-    command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+    command: sh -c "npm run dev"
+    ports:
+      - 8080:8080
   mongodb:
     image: mongo:5.0.14
     ports:
@@ -10,6 +12,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_DB=pacman
   mongo-express:
     image: mongo-express
     ports:
