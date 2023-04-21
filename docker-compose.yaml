@@ -4,7 +4,7 @@ services:
     image: pacman-app
     command: sh -c "npm run dev"
     ports:
-      - 8080:8080
+      - 8000:8000
   mongodb:
     image: mongo:5.0.14
     ports:
