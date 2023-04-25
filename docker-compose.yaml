@@ -1,23 +1,21 @@
-version: '3'
+version: "3"
 services:
-  pacman-app:
-    image: pacman-app
-    command: sh -c "npm run dev"
-    ports:
-      - 8000:8000
   mongodb:
     image: mongo:5.0.14
     ports:
       - 27017:27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_ROOT_DATABASE=pacman
   mongo-express:
     image: mongo-express
+    restart: always
     ports:
-      - 8080:8081
+      - 8081:8081
+    depends_on:
+      - mongodb
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
+  pacman-app: 
+   image: pacman-app:007
+   ports:
+     - 8080:8080
+   depends_on:
+     - mongo-express
