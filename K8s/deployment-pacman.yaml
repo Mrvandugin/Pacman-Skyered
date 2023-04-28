@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pacman-deployment
+  namespace: tomvd-pac
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pacman-app
+  template:
+    metadata:
+      labels:
+        app: pacman-app
+    spec:
+      containers:
+      - name: pacman-app
+        image: pacman-app:007
+        ports:
+        - containerPort: 80
