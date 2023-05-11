@@ -15,6 +15,10 @@ spec:
     spec:
       containers:
       - name: pacman-app
-        image: pacman-app:007
+        image: harbor.skyered-devops.de/pacman/pacman-app:0.2
         ports:
         - containerPort: 80
+        imagePullPolicy: Always
+      imagePullSecrets: 
+        - name: harbor-login
+
