@@ -10,6 +10,7 @@ variables:
   registry: 'harbor'
   dockerfilePath: './Dockerfile'
   tag: 0.2 
+  kubeconfig: 'K8s/kubeconfig.yaml' # Pfad zum Kubeconfig-File
 
 # Build, push and Tag
 steps:
@@ -22,3 +23,15 @@ steps:
     containerRegistry: $(registry)
     tags: |
      $(tag)
+
+# Deploy to K8s
+- task: Kubernetes@1
+  displayName: Deploy to Kubernetes
+  inputs:
+    connectionType: 'Kubernetes' # Verbindungstyp zu Kubernetes
+    kubernetesServiceEndpoint: 'k8s connection' # Name Ihres Kubernetes-Service-Endpoints in Azure DevOps
+    command: 'apply'
+    useConfigurationFile: true
+    configuration: 'K8s/deployment-pacman.yaml' # Pfad zum YAML-File für Kubernetes-Deployment
+    secretType: 'kubeconfig'
+    secretArguments: '-c $(kubeconfig)' # Pfad zur variable
