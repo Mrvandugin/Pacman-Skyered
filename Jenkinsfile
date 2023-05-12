@@ -11,6 +11,7 @@ pipeline {
     registry = 'harbor.skyered-devops.de'
     dockerfilePath = './Dockerfile'
     tag = '0.4'
+    kubeconfigpacman = credentials('kubeconfigpacman')
   }
   
   stages {  
@@ -26,6 +27,14 @@ pipeline {
           sh 'echo ${HARBOR_PASSWORD} | docker login -u ${HARBOR_USERNAME} ${registry} --password-stdin'
           sh 'docker tag ${imageName}:${tag} ${imageName}:${tag}'
           sh 'docker push ${imageName}:${tag}'
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfigpacman', serverUrl: 'https://skyered-devops.de:6443']) {
+          sh 'kubectl apply -f deployment-pacman.yaml -n tomvd-pac'
         }
       }
     }
