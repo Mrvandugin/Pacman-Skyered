@@ -1,0 +1,27 @@
+---
+- name: Install programs on pacman-vm
+  hosts: pacman-vm
+  become: true
+
+  tasks:
+    - name: Update kubectl
+      command: kubectl version --client
+      register: kubectl_output
+      changed_when: false
+      
+
+
+    - name: Update Docker
+      apt:
+        name: docker-ce
+        state: latest
+
+    - name: Install Java
+      apt:
+        name: openjdk-8-jdk
+        state: present
+
+    - name: Install Maven
+      apt:
+        name: maven
+        state: present

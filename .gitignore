@@ -1,2 +1,4 @@
 .env
 K8s/kubeconfig.yaml
+terraform/.terraform
+ansible/pacman-key.pem
