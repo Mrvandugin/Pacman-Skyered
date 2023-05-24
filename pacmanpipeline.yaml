@@ -41,4 +41,4 @@ steps:
   displayName: Run Ansible Playbook
   inputs:
     playbook: 'ansible/pacmanplaybook.yml' # Pfad zum Ansible-Playbook
-    inventory: '$(kubeconfig)' # Verwende das kubeconfig als Ansible Inventory
+    inventory: 'ansible/inventory.ini' # Ansible Inventory
