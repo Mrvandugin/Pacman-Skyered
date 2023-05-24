@@ -36,9 +36,18 @@ steps:
     secretType: 'kubeconfig'
     secretArguments: '-c $(kubeconfig)' # Pfad zur variable
 
+# Install ansible
+- script: |
+    pip install ansible
+    ansible --version
+  displayName: 'Install Ansible'
+
+- script: ansible-playbook ansible/pacmanplaybook.yml -i 'ansible/inventory.ini'  
+  displayName: 'Run Ansible Playbook'
+
 # Füge den Ansible-Playbook-Schritt hinzu
-- task: Ansible@4
-  displayName: Run Ansible Playbook
-  inputs:
-    playbook: 'ansible/pacmanplaybook.yml' # Pfad zum Ansible-Playbook
-    inventory: 'ansible/inventory.ini' # Ansible Inventory
+#- task: Ansible@4
+#  displayName: Run Ansible Playbook
+#  inputs:
+#    playbook: 'ansible/pacmanplaybook.yml' # Pfad zum Ansible-Playbook
+ #   inventory: 'ansible/inventory.ini' # Ansible Inventory
