@@ -42,7 +42,7 @@ steps:
     ansible --version
   displayName: 'Install Ansible'
 
-- script: ansible-playbook ansible/pacmanplaybook.yml -i 'ansible/inventory.ini'  
+- script: ansible-playbook ansible/pacmanplaybook.yml -i ansible/inventory.ini
   displayName: 'Run Ansible Playbook'
 
 # Füge den Ansible-Playbook-Schritt hinzu
