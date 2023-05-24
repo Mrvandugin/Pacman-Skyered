@@ -42,12 +42,12 @@ steps:
     ansible --version
   displayName: 'Install Ansible'
 
-- script: sudo ansible-playbook -i ansible/inventory.ini ansible/pacmanplaybook.yml
-  displayName: 'Run Ansible Playbook'
+#- script: sudo ansible-playbook -i ansible/inventory.ini ansible/pacmanplaybook.yml
+#  displayName: 'Run Ansible Playbook'
 
 # Füge den Ansible-Playbook-Schritt hinzu
-#- task: Ansible@4
-#  displayName: Run Ansible Playbook
-#  inputs:
-#    playbook: 'ansible/pacmanplaybook.yml' # Pfad zum Ansible-Playbook
- #   inventory: 'ansible/inventory.ini' # Ansible Inventory
+- task: Ansible@4
+  displayName: Run Ansible Playbook
+  inputs:
+    playbook: 'ansible/pacmanplaybook.yml' # Pfad zum Ansible-Playbook
+    inventory: 'ansible/inventory.ini' # Ansible Inventory
