@@ -44,7 +44,7 @@ steps:
 
 - script: |
     ansible --version
-    sudo ansible-playbook -i 'ansible/inventory.ini' 'ansible/pacmanplaybook.yml' --key-file ansible/pacman-key.pem
+    ansible-playbook -i 'ansible/inventory.ini' 'ansible/pacmanplaybook.yml' --key-file ansible/pacman-key.pem
   displayName: 'Run Ansible Playbook'
 
 # Füge den Ansible-Playbook-Schritt hinzu
